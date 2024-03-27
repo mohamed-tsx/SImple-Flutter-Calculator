@@ -9,40 +9,68 @@ class EventAndForms extends StatefulWidget {
 
 class _EventAndFormsState extends State<EventAndForms> {
   final formkey = GlobalKey<FormState>();
-  TextEditingController txt1Controller = new TextEditingController();
-  TextEditingController txt2Controller = new TextEditingController();
+  TextEditingController txt1Controller = TextEditingController();
+  TextEditingController txt2Controller = TextEditingController();
+  int result = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Form(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Enter First Number"),
-              controller: txt1Controller,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Enter Second Number"),
-              controller: txt2Controller,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(onPressed: () => {}, child: Text("Calculate")),
-            Text(
-              "The result is: ",
-              style: TextStyle(fontSize: 20),
-            )
-          ],
-        )),
+          key: formkey, // Assign the GlobalKey<FormState> here
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: txt1Controller,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter First Number";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(labelText: "Enter First Number"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: txt2Controller,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter Second Number";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(labelText: "Enter Second Number"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (formkey.currentState != null &&
+                      formkey.currentState!.validate()) {
+                    int no1 = int.parse(txt1Controller.text);
+                    int no2 = int.parse(txt2Controller.text);
+                    setState(() {
+                      result = no1 + no2;
+                    });
+                  }
+                },
+                child: Text("Calculate"),
+              ),
+              Text(
+                "The result is: $result",
+                style: TextStyle(fontSize: 20),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
