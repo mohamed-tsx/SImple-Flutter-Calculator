@@ -9,7 +9,8 @@ class EventAndForms extends StatefulWidget {
 
 class _EventAndFormsState extends State<EventAndForms> {
   final formkey = GlobalKey<FormState>();
-  TextEditingController textEditingController = new TextEditingController();
+  TextEditingController txt1Controller = new TextEditingController();
+  TextEditingController txt2Controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +23,7 @@ class _EventAndFormsState extends State<EventAndForms> {
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: "Enter First Number"),
+              controller: txt1Controller,
             ),
             SizedBox(
               height: 10,
@@ -29,6 +31,7 @@ class _EventAndFormsState extends State<EventAndForms> {
             TextFormField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: "Enter Second Number"),
+              controller: txt2Controller,
             ),
             SizedBox(
               height: 10,
